@@ -5,7 +5,7 @@ import { SearchIcon } from "lucide-react";
 const Search = () => {
     return ( 
         <div className="items-center flex gap-2">
-            <Input placeholder="Busque uma barbearia"/>
+            <Input placeholder="Busque"/>
             <Button variant="default" size="icon">
                 <SearchIcon size={18} />
             </Button>
