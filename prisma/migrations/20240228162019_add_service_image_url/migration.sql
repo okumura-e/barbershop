@@ -32,7 +32,7 @@ CREATE TABLE "Service" (
 CREATE TABLE "Booking" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
-    "serviceID" TEXT NOT NULL,
+    "serviceId" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "status" TEXT NOT NULL,
     "barbershopId" TEXT NOT NULL,
@@ -49,7 +49,7 @@ ALTER TABLE "Service" ADD CONSTRAINT "Service_barbershopID_fkey" FOREIGN KEY ("b
 ALTER TABLE "Booking" ADD CONSTRAINT "Booking_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Booking" ADD CONSTRAINT "Booking_serviceID_fkey" FOREIGN KEY ("serviceID") REFERENCES "Service"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Booking" ADD CONSTRAINT "Booking_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "Service"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Booking" ADD CONSTRAINT "Booking_barbershopId_fkey" FOREIGN KEY ("barbershopId") REFERENCES "Barbershop"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
