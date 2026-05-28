@@ -11,7 +11,7 @@ import {
   SheetTitle,
   SheetTrigger
 } from '@/app/_components/ui/sheet';
-import { Barbershop, Booking, Service } from '@prisma/client';
+import { Establishment, Booking, Service } from '@prisma/client';
 import { ptBR } from 'date-fns/locale';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -25,14 +25,14 @@ import { useRouter } from 'next/navigation';
 import { getDayBookings } from '../_actions/get-day-bookings';
 
 interface ServiceItemProps {
-  barbershop: Barbershop;
+  establishment: Establishment;
   service: Service;
   isAuthenticated: boolean;
 }
 
 const ServiceItem = ({
   service,
-  barbershop,
+  establishment,
   isAuthenticated
 }: ServiceItemProps) => {
   const router = useRouter();
@@ -47,11 +47,11 @@ const ServiceItem = ({
   useEffect(() => {
     if (!date) return;
     const refreshAvailableHours = async () => {
-      const _dayBookings = await getDayBookings(barbershop.id, date);
+      const _dayBookings = await getDayBookings(establishment.id, date);
       setDayBookings(_dayBookings);
     };
     refreshAvailableHours();
-  }, [barbershop.id, date]);
+  }, [establishment.id, date]);
 
   const handleDateClick = (date: Date | undefined) => {
     setDate(date);
@@ -75,8 +75,9 @@ const ServiceItem = ({
       const newDate = setMinutes(setHours(date, dateHour), dateMinutes);
 
       await saveBooking({
+        employeeId: employee.id,
         serviceId: service.id,
-        barbershopId: barbershop.id,
+        establishmentId: establishment.id,
         date: newDate,
         userId: (data.user as any).id
       });
@@ -238,7 +239,7 @@ const ServiceItem = ({
                               <h3 className="text-gray-400 text-sm">
                                 Barbearia
                               </h3>
-                              <h4 className="text-sm ">{barbershop.name}</h4>
+                              <h4 className="text-sm ">{establishment.name}</h4>
                             </div>
                           </>
                         )}

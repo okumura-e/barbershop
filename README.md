@@ -5,6 +5,16 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with the [`create-
 First, run the development server:
 
 ```bash
+
+# to migrate    
+npx prisma migrate deploy
+
+# to seed db
+npx prisma db seed
+```
+
+```bash
+# run server
 npm run dev
 # or
 yarn dev

@@ -3,20 +3,20 @@
 import { Badge } from '@/app/_components/ui/badge';
 import { Button } from '@/app/_components/ui/button';
 import { Card, CardContent } from '@/app/_components/ui/card';
-import { Barbershop } from '@prisma/client';
+import { Establishment } from '@prisma/client';
 import { StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-interface BarbershopItemProps {
-  barbershop: Barbershop;
+interface EstablishmentItemProps {
+  establishment: Establishment;
 }
 
-const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
+const EstablishmentItem = ({ establishment }: EstablishmentItemProps) => {
   const router = useRouter();
 
   const handleBookingClick = () => {
-    router.push(`/barbershops/${barbershop.id}`);
+    router.push(`/establishments/${establishment.id}`);
   };
 
   return (
@@ -34,11 +34,11 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
           </div>
 
           <Image
-            src={barbershop.imageUrl}
+            src={establishment.imageUrl}
             width={0}
             height={0}
             sizes="100vw"
-            alt={barbershop.name}
+            alt={establishment.name}
             className="h-[159px] rounded-2xl"
             style={{ objectFit: 'cover' }}
             fill
@@ -47,10 +47,10 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
 
         <div className="px-3 pb-3">
           <h2 className="font-bold mt-2 overflow-hidden text-ellipsis text-nowrap">
-            {barbershop.name}
+            {establishment.name}
           </h2>
           <p className="text-sm text-gray-400 overflow-hidden text-ellipsis text-nowrap">
-            {barbershop.address}
+            {establishment.address}
           </p>
           <Button
             className="w-full mt-3"
@@ -64,4 +64,4 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
     </Card>
   );
 };
-export default BarbershopItem;
+export default EstablishmentItem;

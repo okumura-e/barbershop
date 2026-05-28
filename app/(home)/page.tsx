@@ -3,7 +3,7 @@ import Header from '../_components/header';
 import { ptBR } from 'date-fns/locale/pt-BR';
 import Search from './_components/search';
 import BookingItem from '../_components/booking-item';
-import BarbershopItem from './_components/barber-shop-item';
+import EstablishmentItem from './_components/establishment-item';
 import { db } from '../_lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../_lib/auth';
@@ -11,10 +11,10 @@ import { authOptions } from '../_lib/auth';
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  const [barbershops, recommendedBarbershops, confirmedBookings] =
+  const [establishments, recommendedEstablishments, confirmedBookings] =
     await Promise.all([
-      db.barbershop.findMany({}),
-      db.barbershop.findMany({
+      db.establishment.findMany({}),
+      db.establishment.findMany({
         orderBy: {
           id: 'asc'
         }
@@ -29,7 +29,7 @@ export default async function Home() {
             },
             include: {
               service: true,
-              barbershop: true
+              establishment: true
             }
           })
         : Promise.resolve([])
@@ -76,9 +76,9 @@ export default async function Home() {
         </h2>
 
         <div className="flex gap-4 px-5 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {barbershops.map(barbershop => (
-            <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          {establishments.map(establishment => (
+            <div key={establishment.id} className="min-w-[167px] max-w-[167px]">
+              <EstablishmentItem key={establishment.id} establishment={establishment} />
             </div>
           ))}
         </div>
@@ -89,9 +89,9 @@ export default async function Home() {
           Populares
         </h2>
         <div className="flex gap-4 px-5 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {recommendedBarbershops.map(barbershop => (
-            <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
-              <BarbershopItem key={barbershop.id} barbershop={barbershop} />
+          {recommendedEstablishments.map(establishment => (
+            <div key={establishment.id} className="min-w-[167px] max-w-[167px]">
+              <EstablishmentItem key={establishment.id} establishment={establishment} />
             </div>
           ))}
         </div>

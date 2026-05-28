@@ -6,8 +6,14 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum UserRole {
+  CLIENT
+  OWNER
 }
 
 model User {
@@ -19,23 +25,37 @@ model User {
   accounts      Account[]
   sessions      Session[]
   bookings      Booking[]
+  role          UserRole        @default(CLIENT)
+  establishments Establishment[]
 }
 
-model Barbershop {
+model Establishment  {
   id       String    @id @default(uuid())
   name     String
   address  String
   imageUrl String
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id])
+  employees Employee[]
   services Service[]
   bookings Booking[]
+}
+
+model Employee {
+  id           String     @id @default(uuid())
+  name         String
+  imageUrl     String?
+  establishmentID String
+  establishment Establishment  @relation(fields: [establishmentID], references: [id])
+  bookings     Booking[]
 }
 
 model Service {
   id           String     @id @default(uuid())
   name         String
   price        Decimal    @db.Decimal(10, 2)
-  barbershopID String
-  barbershop   Barbershop @relation(fields: [barbershopID], references: [id])
+  establishmentID String
+  establishment Establishment  @relation(fields: [establishmentID], references: [id])
   description  String
   bookings     Booking[]
   imageUrl     String
@@ -49,8 +69,10 @@ model Booking {
   service      Service    @relation(fields: [serviceId], references: [id])
   date         DateTime
   status       String
-  barbershopId String
-  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
+  establishmentId String
+  establishment   Establishment  @relation(fields: [establishmentId], references: [id])
+  employeeId String
+  employee   Employee @relation(fields: [employeeId], references: [id])
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 }

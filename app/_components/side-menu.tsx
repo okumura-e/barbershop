@@ -5,6 +5,7 @@ import {
   HomeIcon,
   LogInIcon,
   LogOutIcon,
+  StoreIcon,
   UserIcon
 } from 'lucide-react';
 import { SheetHeader, SheetTitle } from './ui/sheet';
@@ -64,12 +65,20 @@ const SideMenu = () => {
         </Button>
 
         {data?.user && (
-          <Button variant="outline" className="justify-start" asChild>
-            <Link href="/bookings">
-              <CalendarIcon size={18} className="mr-2" />
-              Agendamentos
-            </Link>
-          </Button>
+          <>
+            <Button variant="outline" className="justify-start" asChild>
+              <Link href="/bookings">
+                <CalendarIcon size={18} className="mr-2" />
+                Agendamentos
+              </Link>
+            </Button>
+            <Button variant="outline" className="justify-start" asChild>
+              <Link href="/dashboard/establishments">
+                <StoreIcon size={18} className="mr-2" />
+                Meus estabelecimentos
+              </Link>
+            </Button>
+          </>
         )}
       </div>
     </>

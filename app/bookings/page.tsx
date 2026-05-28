@@ -21,7 +21,7 @@ const BookingsPage = async () => {
       },
       include: {
         service: true,
-        barbershop: true
+        establishment: true
       }
     }),
     db.booking.findMany({
@@ -33,7 +33,7 @@ const BookingsPage = async () => {
       },
       include: {
         service: true,
-        barbershop: true
+        establishment: true
       }
     })
   ]);

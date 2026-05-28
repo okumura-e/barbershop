@@ -8,20 +8,20 @@ import {
   StarIcon
 } from 'lucide-react';
 import Image from 'next/image';
-import BarbershopInfo from './_components/barbershop-info';
+import EstablishmentInfo from './_components/establishment-info';
 import ServiceItem from './_components/service-item';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/app/_lib/auth';
 
-interface BarbershopDetailsPageProps {
+interface EstablishmentDetailsPageProps {
   params: {
     id?: string;
   };
 }
 
-const BarbershopDetailsPage = async ({
+const EstablishmentDetailsPage = async ({
   params
-}: BarbershopDetailsPageProps) => {
+}: EstablishmentDetailsPageProps) => {
   const session = await getServerSession(authOptions);
 
   if (!params.id) {
@@ -29,7 +29,7 @@ const BarbershopDetailsPage = async ({
     return null;
   }
 
-  const barbershop = await db.barbershop.findUnique({
+  const establishment = await db.establishment.findUnique({
     where: {
       id: params.id
     },
@@ -38,26 +38,26 @@ const BarbershopDetailsPage = async ({
     }
   });
 
-  if (!barbershop) {
+  if (!establishment) {
     // TODO: redirecionar para a home page
     return null;
   }
 
   return (
     <div>
-      <BarbershopInfo barbershop={barbershop} />
+      <EstablishmentInfo establishment={establishment} />
 
       <div className="px-5 flex flex-col gap-4 py-6">
-        {barbershop.services.map(service => (
+        {establishment.services.map(service => (
           <ServiceItem
             key={service.id}
             service={service}
             isAuthenticated={!!session?.user}
-            barbershop={barbershop}
+            establishment={establishment}
           />
         ))}
       </div>
     </div>
   );
 };
-export default BarbershopDetailsPage;
+export default EstablishmentDetailsPage;

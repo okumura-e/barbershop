@@ -1,20 +1,20 @@
 import { redirect } from 'next/navigation';
-import BarbershopItem from '../(home)/_components/barber-shop-item';
+import EstablishmentItem from '../(home)/_components/establishment-item';
 import Header from '../_components/header';
 import { db } from '../_lib/prisma';
 import Search from '../(home)/_components/search';
 
-interface BarbershopPageProps {
+interface establishmentPageProps {
   searchParams: {
     search?: string;
   };
 }
 
-const BarbershopPage = async ({ searchParams }: BarbershopPageProps) => {
+const EstablishmentPage = async ({ searchParams }: establishmentPageProps) => {
   if (!searchParams.search) {
     return redirect('/');
   }
-  const barbershops = await db.barbershop.findMany({
+  const establishments = await db.establishment.findMany({
     where: {
       name: {
         contains: searchParams.search,
@@ -36,15 +36,15 @@ const BarbershopPage = async ({ searchParams }: BarbershopPageProps) => {
           Resultados para &quot;{searchParams.search}&quot;
         </h1>
         <div className="grid grid-cols-2 gap-4">
-          {barbershops.map(barbershop => (
-            <div className="w-full" key={barbershop.id}>
-              <BarbershopItem barbershop={barbershop} />
+          {establishments.map(establishment => (
+            <div className="w-full" key={establishment.id}>
+              <EstablishmentItem establishment={establishment} />
             </div>
           ))}
         </div>
-        {barbershops.length === 0 && <p>Nenhuma barbearia encontrada.</p>}
+        {establishments.length === 0 && <p>Nenhuma barbearia encontrada.</p>}
       </div>
     </>
   );
 };
-export default BarbershopPage;
+export default EstablishmentPage;

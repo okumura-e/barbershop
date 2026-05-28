@@ -3,16 +3,16 @@
 import SideMenu from '@/app/_components/side-menu';
 import { Button } from '@/app/_components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/app/_components/ui/sheet';
-import { Barbershop } from '@prisma/client';
+import { Establishment } from '@prisma/client';
 import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-interface BarbershopInfoProps {
-  barbershop: Barbershop;
+interface EstablishmentInfoProps {
+  establishment: Establishment;
 }
 
-const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
+const EstablishmentInfo = ({ establishment }: EstablishmentInfoProps) => {
   const router = useRouter();
   const handleBackClick = () => {
     router.replace('/');
@@ -47,8 +47,8 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
         </Sheet>
 
         <Image
-          src={barbershop.imageUrl}
-          alt={barbershop.name}
+          src={establishment.imageUrl}
+          alt={establishment.name}
           style={{ objectFit: 'cover' }}
           className="opacity-75"
           fill
@@ -56,10 +56,10 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
       </div>
 
       <div className="px-5 pt-3 pb-6 border-b border-solid border-secondary">
-        <h1 className="text-xl font-bold">{barbershop.name}</h1>
+        <h1 className="text-xl font-bold">{establishment.name}</h1>
         <div className="flex items-center gap-2 mt-2">
           <MapPinIcon className="text-primary" size={18} />
-          <p className="text-sm">{barbershop.address}</p>
+          <p className="text-sm">{establishment.address}</p>
         </div>
 
         <div className="flex items-center gap-2 mt-2">
@@ -70,4 +70,4 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
     </div>
   );
 };
-export default BarbershopInfo;
+export default EstablishmentInfo;

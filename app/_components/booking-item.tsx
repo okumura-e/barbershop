@@ -35,7 +35,7 @@ import {
 
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
-    include: { service: true; barbershop: true };
+    include: { service: true; establishment: true };
   }>;
 }
 
@@ -71,11 +71,11 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
-                  <AvatarImage src={booking.barbershop.imageUrl} />
+                  <AvatarImage src={booking.establishment.imageUrl} />
                   <AvatarFallback>A</AvatarFallback>
                 </Avatar>
 
-                <h3 className="text-sm">{booking.barbershop.name}</h3>
+                <h3 className="text-sm">{booking.establishment.name}</h3>
               </div>
             </div>
 
@@ -101,7 +101,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
           <div className="relative h-[180px] w-full mt-6">
             <Image
               src="/barbershop-map.png"
-              alt={booking.barbershop.name}
+              alt={booking.establishment.name}
               fill
             />
 
@@ -109,13 +109,13 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               <Card>
                 <CardContent className="flex p-3 gap-2">
                   <Avatar>
-                    <AvatarImage src={booking.barbershop.imageUrl} />
+                    <AvatarImage src={booking.establishment.imageUrl} />
                   </Avatar>
 
                   <div>
-                    <h2 className="font-bold">{booking.barbershop.name}</h2>
+                    <h2 className="font-bold">{booking.establishment.name}</h2>
                     <h3 className="text-xs overflow-hidden text-nowrap text-ellipsis">
-                      {booking.barbershop.address}
+                      {booking.establishment.address}
                     </h3>
                   </div>
                 </CardContent>
@@ -156,7 +156,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               </div>
               <div className="flex justify-between">
                 <h3 className="text-gray-400 text-sm">Barbearia</h3>
-                <h4 className="text-sm ">{booking.barbershop.name}</h4>
+                <h4 className="text-sm ">{booking.establishment.name}</h4>
               </div>
             </CardContent>
           </Card>
